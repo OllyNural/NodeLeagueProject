@@ -4,7 +4,15 @@
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
 <script src="/angular.js"></script>
 </head>
-<body>
-<h1>Hello Summoner World!</h1>
+<body ng-app="main">
+	<div ng-controller="controller-div">
+		<h1>Hello University World!</h1>
+			The ID is 12352423
+			The Content is {{firstName}}
+			Does the person have ranked stats? 
+		<h3>
+			{{doesRankingExist}}
+		</h3>
+	</div>
 </body>
 </html>

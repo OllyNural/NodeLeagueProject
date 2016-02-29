@@ -20,6 +20,10 @@ app.get('/university', function(req, res) {
 	res.sendFile(path.join(__dirname + '/pages/missinguniversity.html'));
 });
 
+app.get('/error', function(req, res) {
+	res.sendFile(path.join(__dirname + '/pages/error.html'));
+});
+
 require('./routes')(app);
 
 app.listen(8080);
