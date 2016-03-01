@@ -7,7 +7,9 @@ exports.findRankedByName = function(req, response) {
 	request
 	.get("https://euw.api.pvp.net/api/lol/euw/v2.5/league/by-summoner/" + ID + "/entry?api_key=" + APIKey)
 	.end(function(err, res) {
-		if (res.statusCode == 404 || res.statusCode < 400) {
+		if (res.statusCode == 404) {
+			return response.sendStatus(res.statusCode);
+		} else if (res.statusCode < 400) {
 			return response.send(JSON.stringify(res.body));
 		} else {
 			return response.sendStatus(res.statusCode);
@@ -21,7 +23,9 @@ exports.findBasicByName = function(req, response) {
 	request
 	.get("https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/" + username + "?api_key=" + APIKey)
 	.end(function(err, res) {
-		if (res.statusCode == 404) {
+		if (res == undefined) {
+			return response.sendStatus(500);
+		} else if (res.statusCode == 404) {
 			return response.sendStatus(404);
 		} else if (res.statusCode > 400) {
 			return response.sendStatus(500);

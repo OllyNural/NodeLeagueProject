@@ -1,23 +1,26 @@
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
-<script src="/angular.js"></script>
+<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script> -->
+<script src="/bootstrap.min.css"></script>
+<!-- <script src="/angular.js"></script> -->
 </head>
-<body ng-app="main">
-	<div ng-controller="controller-div">
-		<h1>Hello University World!</h1>
-			The ID is {{summoner.ident}}
-			</br>
-			The Name is {{summoner.name}}
-			</br>
-			Does the person have ranked stats? 
-		<h3 ng-show="doesSummonerExist">
-			Summoner Exists
-			<p ng-show="doesRankingExist">
-				Summoner has rank stats
-			</p>
-		</h3>
+<body>
+	<!-- Other calls to make most played champions? This can be cached very rarely 1 call to return all mastery champion information.  -->
+	<div>
+		<!-- We need a banner here -->
+		<!-- Maybe a home page banner, like the one I started doing years ago -->
+		<!-- Or just Home button, search summoner and search university. -->
+		<!-- How are we going to distinguish between search Single Summoner and search University ~~~~~~~~~~~~ Can use placeholders -->
+	</div>
+
+	<div> 
+		<!-- Where do we put the summoner's basic information like account level, picture, name, (ID?), etc -->
+		<!-- Either at one side, probably left, or if at the top then on a banner with their most played champions -->
+	</div>
+
+	<div>
+		<h1>Hello Player World!</h1>
 	</div>
 </body>
 </html>
