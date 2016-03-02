@@ -2,10 +2,46 @@
 <head>
 <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script> -->
-<script src="/bootstrap.min.css"></script>
+<link rel="stylesheet" typ="text/css" src="/bootstrap.min.css">
 <!-- <script src="/angular.js"></script> -->
 </head>
 <body>
+
+	<nav class="navbar navbar-default navbar-static-top">
+		<div class="container-fluid">
+
+
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" 
+				data-toggle="collapse" data-target="#navbar-collapse-1">
+					<span class="sr-only">Toggle Navigation</span>
+				</button>
+				<a class="navbar-brand" href="#">LoL-Uni</a>
+			</div>
+
+
+			<div class="collapse navbar-collapse" id="navbar-collapse-1">
+				<ul class="nav navbar-nav">
+					<li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+					<li><a href="#">Another Link</a></li>
+					<li class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle"dropdown" role="button" aria-haspopup="true" aria-expanded="false">Dropdown
+						<span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">An Action Here</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#">Some Search/Link for Single Summoner</a></li>
+							<li role="separator" class="divider"></li>
+							<li><a href="#">Some Search/Link for University</a></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+
+
 	<!-- Other calls to make most played champions? This can be cached very rarely 1 call to return all mastery champion information.  -->
 	<div>
 		<!-- We need a banner here -->
