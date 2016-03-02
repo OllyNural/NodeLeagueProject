@@ -32,10 +32,10 @@ angular.module('main', [])
             // Here we can do another call for champion masteries
             // As we know the player exists so no wasted calls
 
-            $http({
-                method: 'GET',
-                url: '/api/summoner/mastery/' + data.data[key].id
-            }).then(function success)
+            // $http({
+            //     method: 'GET',
+            //     url: '/api/summoner/mastery/' + data.data[key].id
+            // }).then(function success)
 
 
 
@@ -57,7 +57,6 @@ angular.module('main', [])
 
                 $scope.ranking = {
                     "rankedEntries": rankedData.data[data.data[key].id]
-                    ""
                     // Check whether you can reference the objects in the front end
                     // Without assigning them here e.g just rankedEntries or
                     // rankedEntries.id etc...
