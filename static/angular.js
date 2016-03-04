@@ -28,7 +28,6 @@ angular.module('main', [])
             }
 
 
-
             // Here we can do another call for champion masteries
             // As we know the player exists so no wasted calls
 
@@ -36,9 +35,6 @@ angular.module('main', [])
             //     method: 'GET',
             //     url: '/api/summoner/mastery/' + data.data[key].id
             // }).then(function success)
-
-
-
 
 
 
@@ -51,20 +47,39 @@ angular.module('main', [])
                 url: "/api/summoner/ranked/" + data.data[key].id
             }).then(function succesCallback(rankedData) {
                 console.log("Data received from ranked call: \n");
-                console.log(rankedData.data);
+                console.log(rankedData.data[data.data[key].id]);
                 // Sets the boolean ranked to true;
                 $scope.doesRankingExist = true;
 
-                $scope.ranking = {
-                    "rankedEntries": rankedData.data[data.data[key].id]
-                    // Check whether you can reference the objects in the front end
-                    // Without assigning them here e.g just rankedEntries or
-                    // rankedEntries.id etc...
-                };
+                // We're assuming there are rankings for this person
+                if (rankedData.data[data.data[key].id][0].queue == "RANKED_SOLO_5x5") {
+                    $scope.soloqDoesLPExist = true;
+                    if (rankedData.data[data.data[key].id][0].entries.miniSeries != undefined) {
+                        console.log(rankedData.data[data.data[key].id][0].entries.miniSeries);
+                        $scope.soloqDoesLPExist = false;
+                        $scope.soloqDoesMiniEntryExist = true;
+                        $scope.rankingsoloq = {
+                            "target": rankedData.data[data.data[key].id][0].entries.miniSeries.target,
+                            "wins": rankedData.data[data.data[key].id][0].entries.miniSeries.wins,
+                            "losses": rankedData.data[data.data[key].id][0].entries.miniSeries.losses,
+                            "progress": rankedData.data[data.data[key].id][0].entries.miniSeries.progress
+                        }
+                    }
+                    $scope.rankingsoloq = {
+                        "name": rankedData.data[data.data[key].id][0].name,
+                        "tier": rankedData.data[data.data[key].id][0].tier,
+                        "queue": rankedData.data[data.data[key].id][0].queue,
+                        "division": rankedData.data[data.data[key].id][0].entries[0].division,
+                        "LP": rankedData.data[data.data[key].id][0].entries[0].leaguePoints
+                    };
+                }
 
             }, function errorCallback(data) {
+                $scope.rankingsoloq = {
+                    "ranking": "Unranked"
+                };
                 if (data.status == 404) {
-                    console.log("ERROR CODE: " + data.  status + ". No ranked stats for given ID");
+                    console.log("ERROR CODE: " + data.status + ". No ranked stats for given ID");
                     // Sets the boolean ranked to false
                     $scope.doesRankingExist = false;
                 } else if (data.status == 500) {
@@ -93,5 +108,4 @@ angular.module('main', [])
                 window.location = "/error";
             }
         });
-
     });

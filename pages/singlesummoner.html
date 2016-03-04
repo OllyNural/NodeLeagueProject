@@ -1,67 +1,78 @@
+<!DOCTYPE html>
 <html>
 <head>
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script> -->
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
-<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-<script src="/angular.js"></script>
-<link rel="stylesheet" href="/stylesheet.css">
+  <title>
+    Some Title
+  </title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+  <script type="text/javascript" src="/angular.js"></script>
+  <link rel="stylesheet" href="/stylesheet.css"/>
 </head>
-<body ng-app="main">
+<body ng-app="main" class="ng-cloak">
 
-	<div ng-controller="controller-div">
-
-	<!-- Other calls to make most played champions? This can be cached very rarely 1 call to return all mastery champion information.  -->
-		<!-- We need a banner here -->
-		<!-- Maybe a home page banner, like the one I started doing years ago -->
-		<!-- Or just Home button, search summoner and search university. -->
-		<!-- How are we going to distinguish between search Single Summoner and search University ~~~~~~~~~~~~ Can use placeholders -->
-		<!-- Where do we put the summoner's basic information like account level, picture, name, (ID?), etc -->
-		<!-- Either at one side, probably left, or if at the top then on a banner with their most played champions -->
-		<div class="container">
-      		<div class="header clearfix">
-        		<nav class="navbar-static-top">
-          			<ul class="nav nav-pills pull-right">
-            			<li role="presentation" class="active"><a href="#">Home</a></li>
-            			<li role="presentation"><a href="#">About</a></li>
-            			<li role="presentation"><a href="#">Contact</a></li>
-          			</ul>
-        		</nav>
-       	 		<h3 class="text-muted">{{summoner.name}}</h3>
-      		</div>
-
-      		<div class="jumbotron">
-        		<h1>Jumbotron heading</h1>
-        		<p class="lead">Cras justo odio, dapibus ac facilisis in, egestas eget quam. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
-      	 		<p><a class="btn btn-lg btn-success" href="#" role="button">Sign up today</a></p>
-     		</div>
-
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
-
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
+  <div class="navbar navbar-default navbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a href="../" class="navbar-brand">LoL Uni-Ranker</a>
+          <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
         </div>
+        <div class="navbar-collapse collapse" id="navbar-main">
+          <ul class="nav navbar-nav">
+            <li>
+              <a href="../aboutus">About Us</a>
+            </li>
+            <li>
+              <a href="../help">Help</a>
+            </li>
+          </ul>
 
-        <div class="col-lg-6">
-          <h4>Subheading</h4>
-          <p>Donec id elit non mi porta gravida at eget metus. Maecenas faucibus mollis interdum.</p>
+          <!-- <ul class="nav navbar-nav navbar-right">
+            <li><a href="http://builtwithbootstrap.com/" target="_blank">Built With Bootstrap</a></li>
+            <li><a href="https://wrapbootstrap.com/?ref=bsw" target="_blank">WrapBootstrap</a></li>
+          </ul> -->
 
-          <h4>Subheading</h4>
-          <p>Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Cras mattis consectetur purus sit amet fermentum.</p>
-
-          <h4>Subheading</h4>
-          <p>Maecenas sed diam eget risus varius blandit sit amet non magna.</p>
         </div>
       </div>
-      </div>
-      <br>
-      <br>
-      </div>
+    </div>
 
+
+	<div class="row" ng-controller="controller-div">
+    <div class="col-lg-12">
+      <div class="container">
+        <div class="jumbotron">
+          <div ng-show="doesSummonerExist" class="row">
+            <div class="container">
+              <div class="col-md-3">
+                <img class="summoner-icon-image" ng-src="http://ddragon.leagueoflegends.com/cdn/6.4.2/img/profileicon/{{summoner.iconId}}.png">
+
+                <div ng-show="doesRankingExist">
+                  <p class="division-rankings">{{rankingsoloq.tier}} {{rankingsoloq.division}}</p>
+                  <div class="mini-series-rankings" ng-show="soloqDoesMiniEntryExist">
+                    {{rankingsoloq.wins}}/{{rankingsoloq.target}} wins, Progess: {{rankingsoloq.wins.progress}}
+                  </div>
+                  <div class="LP-rankings-soloq" ng-show="soloqDoesLPExist">
+                    {{rankingsoloq.LP}}LP
+                  </div>
+                </div>
+                <div ng-hide="doesRankingExist">
+                  <p class="division-rankings">Unranked</p>
+                </div>
+
+              </div>
+              <div class="summoner-heading col-lg-8">
+                <h2>{{summoner.name}}</h2>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+		
+  </div>
 </body>
 </html>
