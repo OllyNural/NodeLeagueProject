@@ -3,7 +3,6 @@ angular.module('main', [])
 
         var pathArray = window.location.pathname.split('/');
         var levelLocation = pathArray[2];
-        console.log("username: " + levelLocation);
 
         // This is the basic API call
         // This is called for very summoner, and it returns a cached (15min) state
@@ -53,16 +52,13 @@ angular.module('main', [])
 
                 // We're assuming there are rankings for this person
                 if (rankedData.data[data.data[key].id][0].queue == "RANKED_SOLO_5x5") {
-                    $scope.soloqDoesLPExist = true;
-                    if (rankedData.data[data.data[key].id][0].entries.miniSeries != undefined) {
-                        console.log(rankedData.data[data.data[key].id][0].entries.miniSeries);
-                        $scope.soloqDoesLPExist = false;
+                    if (rankedData.data[data.data[key].id][0].entries[0].miniSeries != undefined) {
                         $scope.soloqDoesMiniEntryExist = true;
-                        $scope.rankingsoloq = {
-                            "target": rankedData.data[data.data[key].id][0].entries.miniSeries.target,
-                            "wins": rankedData.data[data.data[key].id][0].entries.miniSeries.wins,
-                            "losses": rankedData.data[data.data[key].id][0].entries.miniSeries.losses,
-                            "progress": rankedData.data[data.data[key].id][0].entries.miniSeries.progress
+                        $scope.soloqrankingminiseries = {
+                            "target": rankedData.data[data.data[key].id][0].entries[0].miniSeries.target,
+                            "wins": rankedData.data[data.data[key].id][0].entries[0].miniSeries.wins,
+                            "losses": rankedData.data[data.data[key].id][0].entries[0].miniSeries.losses,
+                            "progress": rankedData.data[data.data[key].id][0].entries[0].miniSeries.progress
                         }
                     }
                     $scope.rankingsoloq = {
@@ -107,5 +103,21 @@ angular.module('main', [])
                 console.log("ERROR CODE: " + data.status + ". Internal server error");
                 window.location = "/error";
             }
+        });
+    })
+
+    .controller('university-controller-div', function($scope, $http) {
+        console.log("Got here");
+        var pathArray = window.location.pathname.split('/');
+        var universityCode = pathArray[2];
+        console.log(universityCode);
+        $http({
+            method: 'GET',
+            url: "/api/university/code/" + universityCode
+        }).then(function succesCallback(data) {
+            console.log("Success Call back");
+            console.log(data);
+        }, function errorCallback(data) {
+            console.log("Error call back");
         });
     });

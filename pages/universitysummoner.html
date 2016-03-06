@@ -1,12 +1,46 @@
+<!DOCTYPE html>
 <html>
 <head>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
-<script src="/angular.js"></script>
+  <title>
+    {{univerrsity.name}} - University Rankings
+  </title>
+  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
+  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
+  <script type="text/javascript" src="/angular.js"></script>
+  <link rel="stylesheet" href="/stylesheet.css"/>
 </head>
-<body ng-app="main">
-	<div ng-controller="controller-div">
-		<h1>Hello University World!</h1>
-	</div>
+<body ng-cloak ng-app="main" class="ng-cloak">
+
+  <div class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <a href="../" class="navbar-brand">LoL Uni-Ranker</a>
+        <button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#navbar-main">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div class="navbar-collapse collapse" id="navbar-main">
+        <ul class="nav navbar-nav">
+          <li>
+            <a href="../aboutus">About Us</a>
+          </li>
+          <li>
+            <a href="../help">Help</a>
+          </li>
+        </ul>
+        <!-- <ul class="nav navbar-nav navbar-right">
+          <li><a href="SomeExternalUrl" target="_blank">SomeExternalUrl</a></li>
+          <li><a href="SomeExternalUrl" target="_blank">SomeExternalUrl</a></li>
+        </ul> -->
+      </div>
+    </div>
+  </div>
+
+  <div class="row" ng-controller="university-controller-div">
+  	Hi
+  </div>
+
 </body>
 </html>
