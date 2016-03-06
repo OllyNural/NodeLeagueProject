@@ -17,9 +17,18 @@ exports.findAllByCode = function(req, response) {
 					{"summonerName": "SomeUsername5"},
 					{"summonerName": "SomeUsername6"},
 					{"summonerName": "SomeUsername7"},
-					{"summonerName": "SomeUsername8"},
+					{"summonerName": "ORPHIUS"},
 					{"summonerName": "SomeUsername9"},
-					{"summonerName": "SomeUsername10"}
+					{"summonerName": "SomeUsername10"},
+					{"summonerName": "SomeUsername11"},
+					{"summonerName": "SomeUsername12"},
+					{"summonerName": "Being"},
+					{"summonerName": "SomeUsername14"},
+					{"summonerName": "SomeUsername15"},
+					{"summonerName": "SomeUsername16"},
+					{"summonerName": "SomeUsername17"},
+					{"summonerName": "SomeUsername18"},
+					{"summonerName": "TheBlackSpectre"}
 		]
 	}
 	console.log("Total JSON from universityList: " + universityList);
@@ -28,8 +37,12 @@ exports.findAllByCode = function(req, response) {
 	// Sort the list into groups of 10
 	// Return new data-type
 	var finalUniversityArray = [];
-	var summonersToSendToRanked = [];
+	var IDsToSendToRanked = [];
 	var summonersToSendToBasic = [];
+
+	if (universityList.length == 0 || summonerNameArray == 0) {
+		return response.sendStatus(400);
+	}
 
 
 	for (i = 0; i < summonerNameArray.length; i++) {
@@ -41,15 +54,32 @@ exports.findAllByCode = function(req, response) {
 			console.log("Sending these summoners to basic API call: " + summonersToSendToBasic);
 			var basicArray = "";
 			console.log("Going to be sending the request to Riot's API");
-			console.log("Some string: " + summonersToSendToBasic);
+			var URL = "https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/" 
+				+ summonersToSendToBasic 
+				+ "?api_key=" 
+				+ APIKey;
+
+			request
+			.get(URL)
+			.end(function(err, res) {
+				if (res.statusCode != 404 || res.statusCode != 400) {
+					console.log(res.body);
+					console.log(JSON.stringify(res.body));
+
+					//TODO ~~ Fix this to make it more efficient
+					for (var username in res.body) {
+						console.log(res.body[username].id);
+						IDsToSendToRanked.push(res.body[username].id);
+					}
+				} 
+			});
+
 			// Clear the Array to start the whole process over again
 			summonersToSendToBasic = [];
 		}
-
-
 	}
 
-		response.send(summonerNameArray);
+	console.log(IDsToSendToRanked);
 
 };
 
