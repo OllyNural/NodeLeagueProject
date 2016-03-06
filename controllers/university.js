@@ -37,7 +37,7 @@ exports.findAllByCode = function(req, response) {
 		summonersToSendToBasic.push(summonerNameArray[i].summonerName);
 
 		// Every 10 we can send the basic request to RIOT's API 
-		if (i % 9 == 0 && i != 0 || i == summonerNameArray.length) {
+		if (i % 9 == 0 && i != 0 || i == summonerNameArray.length - 1) {
 			console.log("Sending these summoners to basic API call: " + summonersToSendToBasic);
 			var basicArray = "";
 			console.log("Going to be sending the request to Riot's API");
