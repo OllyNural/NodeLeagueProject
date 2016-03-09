@@ -9,7 +9,7 @@
   <script type="text/javascript" src="/angular.js"></script>
   <link rel="stylesheet" href="/stylesheet.css"/>
 </head>
-<body ng-cloak ng-app="main" class="ng-cloak">
+<body ng-app="main" class="ng-cloak">
 
   <div class="navbar navbar-default navbar-fixed-top">
     <div class="container">
@@ -41,12 +41,11 @@
 
 	<div class="row" ng-controller="controller-div">
     <div class="col-lg-12">
-      <div class="container">
-        <div class="jumbotron">
-
+      <div class="container"> n             
+<!--  -->
           <!-- If the summoner exists -->
           <div ng-show="doesSummonerExist" class="row">
-            <div class="container">
+            <div cla /  ss="container">
 
               <!-- Summoner Icon, Soloq Ranking Information -->
               <div class="col-md-3">
@@ -54,11 +53,11 @@
                 <!-- The summoners soloq ranking; if exists show it, if not show "Unranked" -->
                 <div ng-show="doesRankingExist">
                   <p class="division-rankings">{{rankingsoloq.tier}} {{rankingsoloq.division}}</p>
-                  <div class="LP-rankings-soloq">
-                    {{rankingsoloq.LP}}LP
-                  </div>
                   <div class="mini-series-rankings" ng-show="soloqDoesMiniEntryExist">
-                    {{soloqrankingminiseries.wins}} / {{soloqrankingminiseries.target}} wins, Progess: {{soloqrankingminiseries.progress}}
+                    {{rankingsoloq.wins}}/{{rankingsoloq.target}} wins, Progess: {{rankingsoloq.wins.progress}}
+                  </div>
+                  <div class="LP-rankings-soloq" ng-show="soloqDoesLPExist">
+                    {{rankingsoloq.LP}}LP
                   </div>
                 </div>
                 <div ng-hide="doesRankingExist">
@@ -77,7 +76,7 @@
           <!-- If the summoner doesn't exist show "404" page-->
           <div class="row">
             <div class="container">
-              <div ng-hide="doesSummonerExist" class="summoner-404-heading">
+              <div class="summoner-404-heading">
                 <h2>{{summoner.name}} <span class="not-found-summoner-text">Not found!</span></h2>
                 <p>Please make sure the summoner exists and is the correct spelling!</p>
               </div>
@@ -86,6 +85,9 @@
 
 
         </div> <!-- Jumbotron -->
+
+        <!-- Here the match history can go and other stats check the grey page to see design -->
+        <!-- Maybe   -->
       </div>
     </div>
 		

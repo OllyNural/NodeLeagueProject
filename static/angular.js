@@ -1,4 +1,4 @@
-angular.module('main', [])
+    angular.module('main', [])
     .controller('controller-div', function($scope, $http) {
 
         var pathArray = window.location.pathname.split('/');
@@ -119,5 +119,6 @@ angular.module('main', [])
             console.log(data);
         }, function errorCallback(data) {
             console.log("Error call back");
+            console.log(data);
         });
     });
