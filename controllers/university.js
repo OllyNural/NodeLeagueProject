@@ -1,5 +1,6 @@
 var request = require('superagent-cache')();
 var APIKey = "896349ec-4ce2-49ed-be1a-b480bf0c7d49";
+var Promise = require('promise');
 
 exports.findAllByCode = function(req, response) {
 	var code = req.params.code.toUpperCase();
@@ -31,7 +32,8 @@ exports.findAllByCode = function(req, response) {
 					{"summonerName": "TheBlackSpectre"}
 		]
 	}
-	console.log("Total JSON from universityList: " + universityList);
+	console.log("Total JSON from universityList: ");
+	console.log(universityList);
 	var summonerNameArray = universityList[code];
 
 	var finalUniversityArray = [];
@@ -39,41 +41,58 @@ exports.findAllByCode = function(req, response) {
 	var IDsToSendToRankedCounted = [];
 	var summonersToSendToBasic = [];
 
+	var counterIds = 0;
+
 	if (universityList.length == 0 || summonerNameArray == 0) {
 		return response.sendStatus(400);
 	}
  
-	for (i = 0; i < summonerNameArray.length; i++) {
-		console.log("Count: " + i);
-		summonersToSendToBasic.push(summonerNameArray[i].summonerName);
+	var promiseOfIds = new Promise(function(resolve, reject) {
+		console.log(summonerNameArray.length/10);
 
-		// Every 10 we can send the basic request to RIOT's API 
-		if (i % 9 == 0 && i != 0 || i == summonerNameArray.length - 1) {
-			console.log("Sending these summoners to basic API call: " + summonersToSendToBasic);
-			var URL = "https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/" 
-				+ summonersToSendToBasic 
-				+ "?api_key=" 
-				+ APIKey;
+		var lengthOfFirstArray = Math.ceil(summonerNameArray.length/10);
+		console.log(lengthOfFirstArray);
+ 		for (i = 0; i < summonerNameArray.length; i++) {
+			console.log("Count: " + i);
+			summonersToSendToBasic.push(summonerNameArray[i].summonerName);
 
-			request
-			.get(URL)
-			.end(function(err, res) {
-				if (res.statusCode != 404 || res.statusCode != 400) {
-					console.log(res.body);
-					console.log(JSON.stringify(res.body));
+			// Every 10 we can send the basic request to RIOT's API 
+			if (i % 9 == 0 && i != 0 || i == summonerNameArray.length - 1) {
+				console.log("Sending these summoners to basic API call: " + summonersToSendToBasic);
+				var URL = "https://euw.api.pvp.net/api/lol/euw/v1.4/summoner/by-name/" 
+					+ summonersToSendToBasic 
+					+ "?api_key=" 
+					+ APIKey;
 
-					//TODO ~~ Fix this to make it more efficient
-					for (var username in res.body) {
-						console.log(res.body[username].id);
-						IDsToSendToRanked.push(res.body[username].id);
+				request
+				.get(URL)
+				.end(function(err, res) {
+					if (res.statusCode != 404 || res.statusCode != 400) {
+						console.log(res.body);
+
+						//TODO ~~ Fix this to make it more efficient
+						console.log("IDs:");
+						for (var username in res.body) {
+							console.log(res.body[username].id);
+							IDsToSendToRanked.push(res.body[username].id);
+						}
+					} else {
+						console.log(err);
 					}
-				} 
-			});
-
-			// Clear the Array to start the whole process over again
-			summonersToSendToBasic = [];
+					counterIds++;
+					//wait(counterIds, lengthOfFirstArray)
+					if(counterIds == lengthOfFirstArray) {
+						console.log("Finishing this set of calls, moving on to ranked");
+						resolve(IDsToSendToRanked);
+					} else {
+						console.log("Not sending yet");
+					}
+				});
+				// Clear the Array to start the whole process over again
+				summonersToSendToBasic = [];
+			}
 		}
-	}
+ 	});
 
 	// Here we are assuming that all the IDs are working from the previous call.
 	// We will make the university call with all the working IDs from the previous call
@@ -81,14 +100,16 @@ exports.findAllByCode = function(req, response) {
 
 
 	//~~ Here we are checking if the call can go through without cutting it up
-	if (IDsToSendToRanked.length <= 40) {
+	promiseOfIds.then(function(ids) {
+		if (ids.length <= 40) {
 		// Here we send the call to Riot's API
 		console.log("The list was below 40");
 		console.log("Sending these summoners to ranked API call: " + IDsToSendToRankedCounted);
 			var URL = "https://euw.api.pvp.net/api/lol/euw/v2.5/league/by-summoner/" 
-				+ summonersToSendToBasic 
+				+ ids 
 				+ "/entry?api_key=" 
 				+ APIKey;
+			console.log(URL);
 
 			request
 			.get(URL)
@@ -98,40 +119,50 @@ exports.findAllByCode = function(req, response) {
 					console.log(JSON.stringify(res.body));
 
 					return response.send(JSON.stringify(res.body));
-				} 
+				}
 			});
-	}
+		} else {
+			console.log("The list was over 40");
+			var lengthOfRankedArray = Math.ceil(ids.length/40);
+			var counter = 0;
+			for (i = 0; i < ids.length; i++) {
+				//TODO - Work out how to nest these, should be fine but what is actually happening? ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+				IDsToSendToRankedCounted.push(ids[i]);
 
-	console.log("The list was over 40");
-	//~~ Oh no! It's longer than 40 IDs. We will need to make multiple calls!
-	//~~ Lets try to make this more efficient shall we?
-	for (i = 0; i < IDsToSendToRanked.length; i++) {
-		//TODO - Work out how to nest these, should be fine but what is actually happening? ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-		IDsToSendToRankedCounted.push(IDsToSendToRanked[i]);
+				if (i % 39 == 0 && i != 0 || i == ids.length - 1) {
+					// Here we add them to IDsToSendToRankedCounted
+					console.log("Sending these summoners to ranked API call: " + IDsToSendToRankedCounted);
+					var URL = "https://euw.api.pvp.net/api/lol/euw/v2.5/league/by-summoner/" 
+						+ IDsToSendToRankedCounted 
+						+ "/entry?api_key=" 
+						+ APIKey;
+					console.log(URL);
 
-		 if (i % 39 == 0 && i != 0 || i == IDsToSendToRanked.length - 1) {
-			// Here we add them to IDsToSendToRankedCounted
-			console.log("Sending these summoners to ranked API call: " + IDsToSendToRankedCounted);
-			var URL = "https://euw.api.pvp.net/api/lol/euw/v2.5/league/by-summoner/" 
-				+ summonersToSendToBasic 
-				+ "/entry?api_key=" 
-				+ APIKey;
+					request
+					.get(URL)
+					.end(function(err, res) {
+						if (res.statusCode != 404 || res.statusCode != 400) {
+							console.log(res.body);
+							finalUniversityArray.push(res.body);
+						} else {
+							console.log(err);
+						}
+						counter++;
+						console.log(counter);
+						if(counter == lengthOfRankedArray) {
+							console.log("Finishing this set of calls, returning array");
+							console.log("FINAL ARRAY: ");
+							console.log(finalUniversityArray);
+							return response.send(JSON.stringify(finalUniversityArray));
+						} else {
+							console.log("Not sending yet");
+						}
+					});
 
-			request
-			.get(URL)
-			.end(function(err, res) {
-				if (res.statusCode != 404 || res.statusCode != 400) {
-					console.log(res.body);
-					
-					finalUniversityArray.push(res.body));
-				} 
-			});
-
-			IDsToSendToRankedCounted = [];
-		 }
-	}
-
-	console.log(finalUniversityArray);
-	return  respones.send(JSON.stringify(finalUniversityArray));
-
+					IDsToSendToRankedCounted = [];
+				}
+				
+			}	
+		}
+	});
 };
