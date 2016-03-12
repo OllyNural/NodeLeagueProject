@@ -39,7 +39,23 @@
   </div>
 
   <div class="row" ng-controller="university-controller-div">
-  	Hi
+    <div class="col-lg-12">
+      <div class="container">
+        <!-- Here check if university code exists -->
+        <div class="row mainUniversityTables">
+          <div ng-show="doesUniversityExist" class="col-lg-8">
+            <table class="table table-striped">
+              <tr>
+                <th>Summoner Name</th>
+                <th>Summoner Level</th>
+                <th>S</th>
+              </tr>
+            </table>
+          </div>
+        </div>
+
+      </div>
+    </div>
   </div>
 
 </body>

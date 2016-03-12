@@ -1,5 +1,6 @@
     angular.module('main', [])
     .controller('controller-div', function($scope, $http) {
+        $scope.doesSummonerExist = true;         
 
         var pathArray = window.location.pathname.split('/');
         var levelLocation = pathArray[2];
@@ -11,7 +12,7 @@
             method: 'GET',
             url: "/api/summoner/basic/" + levelLocation
         }).then(function succesCallback(data) {
-            console.log("Data received from basic call: \n");
+            console.log("Data received from basic call: ");
             console.log(data.data);
             // Sets the boolean summoner to true
             $scope.doesSummonerExist = true;         
@@ -24,7 +25,7 @@
                     "revData": data.data[key].revisionDate,
                     "summonerLevel": data.data[key].summonerLevel
                 };
-            }
+            };
 
 
             // Here we can do another call for champion masteries
@@ -115,8 +116,9 @@
             method: 'GET',
             url: "/api/university/code/" + universityCode
         }).then(function succesCallback(data) {
+            $scope.doesUniversityExist = true;
             console.log("Success Call back");
-            console.log(data);
+            console.log(data.data);
         }, function errorCallback(data) {
             console.log("Error call back");
             console.log(data);

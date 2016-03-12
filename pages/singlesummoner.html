@@ -41,11 +41,11 @@
 
 	<div class="row" ng-controller="controller-div">
     <div class="col-lg-12">
-      <div class="container"> n             
-<!--  -->
+      <div class="container">
+        <div class="jumbotron">
           <!-- If the summoner exists -->
           <div ng-show="doesSummonerExist" class="row">
-            <div cla /  ss="container">
+            <div class="container">
 
               <!-- Summoner Icon, Soloq Ranking Information -->
               <div class="col-md-3">
@@ -54,7 +54,7 @@
                 <div ng-show="doesRankingExist">
                   <p class="division-rankings">{{rankingsoloq.tier}} {{rankingsoloq.division}}</p>
                   <div class="mini-series-rankings" ng-show="soloqDoesMiniEntryExist">
-                    {{rankingsoloq.wins}}/{{rankingsoloq.target}} wins, Progess: {{rankingsoloq.wins.progress}}
+                    {{soloqrankingminiseries.wins}} / {{soloqrankingminiseries.target}} wins, Progess: {{soloqrankingminiseries.progress}}
                   </div>
                   <div class="LP-rankings-soloq" ng-show="soloqDoesLPExist">
                     {{rankingsoloq.LP}}LP
