@@ -44,13 +44,17 @@
         <!-- Here check if university code exists -->
         <div class="row mainUniversityTables">
           <div ng-show="doesUniversityExist" class="col-lg-8">
+            <form class="form-inline">
+              <input ng-model="query" type="text" placeholder="Filter by name" autofocus>
+            </form>
             <table class="table table-striped">
               <tr>
                 <th>Ranking</th>
                 <th>Summoner Name</th>
                 <th>League Ranking</th>
               </tr>
-              <tr ng-repeat="(key, value) in allRankingData" ng-init="index = $index">
+              <!-- This sorts the each person by their name -->
+              <tr ng-repeat="(key, value) in allRankingData | filter:query | orderBy: 'value[0].entries[0].playerOrTeamName'" ng-init="index = $index">
                 <td>{{index}}</td>
                 <td>{{value[0].entries[0].playerOrTeamName}}</td>
                 <td>{{value[0].tier}} {{value[0].entries[0].division}}</td>
