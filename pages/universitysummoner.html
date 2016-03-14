@@ -63,7 +63,7 @@
             <ul ng-repeat="(key, value) in allRankingData | filter:query" ng-init="index = $index">
     		  <li>{{index}}</li>
     		  <li>{{value[0].entries[0].playerOrTeamName}}</li>
-    		  <li>{{value[0].tier}} {{value[0].entries[0].division}}</li>
+    		  <li>{{value[0].tier}} {{rankingData.entries[0].division}}</li>
     		</ul>
           </div>
         </div>
