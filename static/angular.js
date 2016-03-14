@@ -109,7 +109,11 @@
             url: "/api/university/code/" + universityCode
         }).then(function succesCallback(data) {
             $scope.doesUniversityExist = true;
-            $scope.allRankingData = data.data;
+            // Comment these lines to out to return the object to the front en
+            // For ease of use, I am returning an array, removing the IDs from the equation to make things easier to display
+            var array = Object.keys(data).map(function (key) {return data[key]});
+            console.log(array);
+            $scope.allRankingData = array;
         }, function errorCallback(data) {
             console.log("Error call back");
             console.log(data);
