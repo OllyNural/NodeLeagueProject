@@ -46,9 +46,14 @@
           <div ng-show="doesUniversityExist" class="col-lg-8">
             <table class="table table-striped">
               <tr>
+                <th>Ranking</th>
                 <th>Summoner Name</th>
-                <th>Summoner Level</th>
-                <th>S</th>
+                <th>League Ranking</th>
+              </tr>
+              <tr ng-repeat="(key, value) in allRankingData" ng-init="index = $index">
+                <td>{{index}}</td>
+                <td>{{value[0].entries[0].playerOrTeamName}}</td>
+                <td>{{value[0].tier}} {{value[0].entries[0].division}}</td>
               </tr>
             </table>
           </div>

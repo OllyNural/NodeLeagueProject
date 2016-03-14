@@ -119,6 +119,7 @@
             $scope.doesUniversityExist = true;
             console.log("Success Call back");
             console.log(data.data);
+            $scope.allRankingData = data.data;
         }, function errorCallback(data) {
             console.log("Error call back");
             console.log(data);
