@@ -89,13 +89,6 @@
             });
 
 
-
-
-
-
-
-
-
         }, function errorCallback(data) {
             if (data.status == 404){
                 // Sets the boolean summoner to false
@@ -108,7 +101,6 @@
     })
 
     .controller('university-controller-div', function($scope, $http) {
-        console.log("Got here");
         var pathArray = window.location.pathname.split('/');
         var universityCode = pathArray[2];
         console.log(universityCode);
@@ -117,8 +109,6 @@
             url: "/api/university/code/" + universityCode
         }).then(function succesCallback(data) {
             $scope.doesUniversityExist = true;
-            console.log("Success Call back");
-            console.log(data.data);
             $scope.allRankingData = data.data;
         }, function errorCallback(data) {
             console.log("Error call back");
