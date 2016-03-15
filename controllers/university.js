@@ -150,7 +150,7 @@ exports.findAllByCode = function(req, response) {
 						counter++;
 						console.log(counter);
 						if(counter == lengthOfRankedArray) {
-							console.log("Finishing this set of calls, returning array");
+							console.log("Finishing this set of calls, and then returning array");
 							console.log("FINAL ARRAY: ");
 							console.log(finalUniversityArray);
 							return response.send(JSON.stringify(finalUniversityArray));

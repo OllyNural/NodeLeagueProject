@@ -4,7 +4,7 @@
   <title>
     {{univerrsity.name}} - University Rankings
   </title>
-  <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/angularjs/1.0.4/angular.js"></script>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.5/angular.min.js"></script>
   <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"/>
   <script type="text/javascript" src="/angular.js"></script>
   <link rel="stylesheet" href="/stylesheet.css"/>
@@ -60,11 +60,12 @@
                 <td>{{value[0].tier}} {{value[0].entries[0].division}}</td>
               </tr>
             </table> -->
-            <ul ng-repeat="(key, value) in allRankingData | filter:query" ng-init="index = $index">
-    		  <li>{{index}}</li>
-    		  <li>{{value[0].entries[0].playerOrTeamName}}</li>
-    		  <li>{{value[0].tier}} {{value[0].entries[0].division}} - {{value[0].entries[0].leaguePoints}}LP</li>
-    		</ul>
+            <ul ng-repeat="rankingData in allRankingData | filter:query | orderBy:allRankingData[0].entries[0].internalRanking">
+    		      <li>{{index}}</li>
+      		    <li>{{rankingData[0].entries[0].playerOrTeamName}}</li>
+      		    <li>{{rankingData[0].tier}} {{rankingData[0].entries[0].division}} - {{rankingData[0].entries[0].leaguePoints}}LP</li>
+              <li>{{rankingData[0].entries[0].internalRanking}}</li>
+    	     	</ul>
           </div>
         </div>
 

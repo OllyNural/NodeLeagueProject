@@ -118,9 +118,89 @@
             });
             console.log(array);
 
+
+            // ~~TODO~~
+            // Make this more efficient/Look nicer 
+            // This calculates an individual ranking for each person based on their soloq scores.
+            // This is to make sorting on the front end a lot easier as you can't sort by soloq yet
+            console.log("Adding internal ranking to array");
+            for (i = 0; i < array.length; i++) {
+                var totalScore = 0;
+                console.log(array[i][0]);
+                var name = array[i][0].entries[0].playerOrTeamName
+                var tier = array[i][0].tier
+                var division = array[i][0].entries[0].division
+                var lp = array[i][0].entries[0].leaguePoints
+
+                switch (tier) {
+                    case 'BRONZE': totalScore += 1000
+                    break;
+
+                    case 'SILVER': totalScore += 2000
+                    break;
+
+                    case 'GOLD': totalScore += 3000
+                    break;
+
+                    case 'PLATINUM': totalScore += 4000
+                    break;
+
+                    case 'DIAMOND': totalScore += 5000
+                    break;
+
+                    case 'MASTERS': totalScore += 10000
+                    break;
+
+                    case 'CHALLENGER': totalScore += 20000
+                    break;
+
+                    default: console.log("Error in totalling internal rankings (TIER) for university player");
+                }
+
+                switch (division) {
+                    case 'V': totalScore += 0
+                    break;
+
+                    case 'IV': totalScore += 200
+                    break;
+
+                    case 'III': totalScore += 400
+                    break;
+
+                    case 'II': totalScore += 600
+                    break;
+
+                    case 'I': totalScore += 800
+                    break;
+
+                    default: console.log("Error in totalling internal rankings (DIVISION) for university player");
+                }
+
+                totalScore += lp;
+
+                var splicedInternalRanking = ("00000" + totalScore).slice(-5);
+                console.log("Final internal ranking score for [" + name + "] was [" + splicedInternalRanking + "]");
+                array[i][0].entries[0].internalRanking = totalScore + "";
+                console.log(array[i]);
+            }
+
+
             $scope.allRankingData = array;
         }, function errorCallback(data) {
             console.log("Error call back");
             console.log(data);
         });
-    });
+    })
+    .filter('orderObjectBy', function() {
+        return function(items, field, reverse) {
+            var filtered = [];
+            angular.forEach(items, function(item) {
+                filtered.push(item);
+        });
+        filtered.sort(function (a, b) {
+          return (a[field] > b[field] ? 1 : -1);
+        });
+        if(reverse) filtered.reverse();
+        return filtered;
+    };
+});
