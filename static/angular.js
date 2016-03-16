@@ -101,6 +101,7 @@
     .controller('university-controller-div', function($scope, $http) {
         var pathArray = window.location.pathname.split('/');
         var universityCode = pathArray[2];
+        $scope.universityCode = universityCode;
         console.log(universityCode);
         $http({
             method: 'GET',

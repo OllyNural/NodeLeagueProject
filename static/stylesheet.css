@@ -36,14 +36,25 @@
   vertical-align: middle;
 }
 
-.summoner-404-heading h1 {
-   
-}
-
 .not-found-summoner-text {
   color: red;
 }
 
+.uni-width-larger {
+  width: 25%;
+}
+
+.uni-width-smaller {
+  width: 5%;
+}
+
+.form-input-filter-name {
+  margin-bottom: 15px;
+}
+
+.university-name {
+  color: gray;
+}
 
 
 
@@ -62,7 +73,7 @@
 }
 
 .uni-ranking-tier-Platinum {
-  color: #e5e4e2;
+  color: #a3c2c2;
 }
 
 .uni-ranking-tier-Gold {

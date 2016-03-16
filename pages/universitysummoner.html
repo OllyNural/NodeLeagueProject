@@ -44,27 +44,15 @@
         <!-- Here check if university code exists -->
         <div class="row mainUniversityTables">
           <div ng-show="doesUniversityExist" class="col-lg-8">
-            <!-- <table class="table table-striped">
-              <tr>
-                <th>Ranking</th>
-                <th>Summoner Name</th>
-                <th>League Ranking</th>
-              </tr>
-              This sorts the each person by their name
-              <tr ng-repeat="(key, value) in allRankingData | filter:query" ng-init="index = $index">
-                <td>{{index}}</td>
-                <td>{{value[0].entries[0].playerOrTeamName}}</td>
-                <td>{{value[0].tier}} {{value[0].entries[0].division}}</td>
-              </tr>
-            </table> -->
-            <form class="form-inline">
+            <h1>Showing players from <span class="university-name">{{universityCode}}</span></h1>
+            <form class="form-input-filter-name form-inline">
               <input ng-model="query" type="text" placeholder="Filter by Name" autofocus>
             </form>
-            <ul ng-repeat="rankingData in allRankingData | filter:query | orderBy:'-internalRanking'" ng-init="index = $index + 1">
-    		      <li class="uni-ranking">{{index}}</li>
-      		    <li class="uni-player-name">{{rankingData[0].entries[0].playerOrTeamName}}</li>
-      		    <li>
-                <span class="uni-ranking-tier-{{rankingData[0].tier}}">{{rankingData[0].tier}}</span> 
+            <ul class="list-group list-inline uni-ranking-list-ul" ng-repeat="rankingData in allRankingData | filter:query | orderBy:'-internalRanking'" ng-init="index = $index + 1">
+    		      <li class="uni-width-smaller uni-ranking list-group-item">{{index}}</li>
+      		    <li class="uni-width-larger uni-player-name list-group-item">{{rankingData[0].entries[0].playerOrTeamName}}</li>
+      		    <li class="uni-width-larger list-group-item"><b>
+                <span class="uni-ranking-tier-{{rankingData[0].tier}}">{{rankingData[0].tier}}</span></b> 
                 <span class="uni-ranking-division">{{rankingData[0].entries[0].division}}</span> - 
                 <span class="uni-ranking-LP">{{rankingData[0].entries[0].leaguePoints}}LP</span>
               </li>
