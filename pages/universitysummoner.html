@@ -44,9 +44,6 @@
         <!-- Here check if university code exists -->
         <div class="row mainUniversityTables">
           <div ng-show="doesUniversityExist" class="col-lg-8">
-            <form class="form-inline">
-              <input ng-model="query" type="text" placeholder="Filter by" autofocus>
-            </form>
             <!-- <table class="table table-striped">
               <tr>
                 <th>Ranking</th>
@@ -60,11 +57,14 @@
                 <td>{{value[0].tier}} {{value[0].entries[0].division}}</td>
               </tr>
             </table> -->
-            <ul ng-repeat="rankingData in allRankingData | filter:query | orderBy:allRankingData[0].entries[0].internalRanking">
+            <form class="form-inline">
+              <input ng-model="query" type="text" placeholder="Filter by" autofocus>
+            </form>
+            <ul ng-repeat="rankingData in allRankingData | filter:query | orderBy:'-internalRanking'">
     		      <li>{{index}}</li>
       		    <li>{{rankingData[0].entries[0].playerOrTeamName}}</li>
       		    <li>{{rankingData[0].tier}} {{rankingData[0].entries[0].division}} - {{rankingData[0].entries[0].leaguePoints}}LP</li>
-              <li>{{rankingData[0].entries[0].internalRanking}}</li>
+              <li>{{rankingData.internalRanking}}</li>
     	     	</ul>
           </div>
         </div>

@@ -180,10 +180,9 @@
 
                 var splicedInternalRanking = ("00000" + totalScore).slice(-5);
                 console.log("Final internal ranking score for [" + name + "] was [" + splicedInternalRanking + "]");
-                array[i][0].entries[0].internalRanking = totalScore + "";
+                array[i].internalRanking = totalScore;
                 console.log(array[i]);
             }
-
 
             $scope.allRankingData = array;
         }, function errorCallback(data) {
