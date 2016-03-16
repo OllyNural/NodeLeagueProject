@@ -6,15 +6,13 @@
         var levelLocation = pathArray[2];
 
         // This is the basic API call
-        // This is called for very summoner, and it returns a cached (15min) state
-
+        // This is called for very summoner, and it has a cache of 15mins
         $http({
             method: 'GET',
             url: "/api/summoner/basic/" + levelLocation
         }).then(function succesCallback(data) {
             console.log("Data received from basic call: ");
             console.log(data.data);
-            // Sets the boolean summoner to true
             $scope.doesSummonerExist = true;         
 
             for (var key in data.data) {
@@ -110,7 +108,7 @@
         }).then(function succesCallback(data) {
             $scope.doesUniversityExist = true;
 
-            // Comment these lines to out to return the object to the front en
+            // Comment these lines to out to return the object to the front end rather than an array
             // For ease of use, I am returning an array, removing the IDs from the equation to make things easier to display
             var array = [];
             angular.forEach(data.data, function(element) {
@@ -123,7 +121,7 @@
             // Make this more efficient/Look nicer 
             // This calculates an individual ranking for each person based on their soloq scores.
             // This is to make sorting on the front end a lot easier as you can't sort by soloq yet
-            console.log("Adding internal ranking to array");
+            console.log("Adding internal rankings to array");
             for (i = 0; i < array.length; i++) {
                 var totalScore = 0;
                 console.log(array[i][0]);
@@ -178,9 +176,12 @@
 
                 totalScore += lp;
 
-                var splicedInternalRanking = ("00000" + totalScore).slice(-5);
-                console.log("Final internal ranking score for [" + name + "] was [" + splicedInternalRanking + "]");
+                console.log("Final internal ranking score for [" + name + "] was [" + totalScore + "]");
                 array[i].internalRanking = totalScore;
+
+                // Change Tier from 'DIAMOND' to 'Diamond'
+                array[i][0].tier = capitalise(tier);
+
                 console.log(array[i]);
             }
 
@@ -189,17 +190,9 @@
             console.log("Error call back");
             console.log(data);
         });
-    })
-    .filter('orderObjectBy', function() {
-        return function(items, field, reverse) {
-            var filtered = [];
-            angular.forEach(items, function(item) {
-                filtered.push(item);
-        });
-        filtered.sort(function (a, b) {
-          return (a[field] > b[field] ? 1 : -1);
-        });
-        if(reverse) filtered.reverse();
-        return filtered;
-    };
-});
+    });
+
+function capitalise(string) {
+    var newString = string.toLowerCase();
+    return newString.charAt(0).toUpperCase()  + string.slice(1).toLowerCase();
+}

@@ -43,44 +43,53 @@
 .not-found-summoner-text {
   color: red;
 }
-/*
-.container-narrow > hr {
-  margin: 30px 0;
+
+
+
+
+/**
+  All Tier, Division and LP Ranking
+**/
+
+.uni-ranking-tier-CHALLENGER {
+  color: cyan;
+  text-transform: lowercase;
+  text-transform: capitalize;
 }
 
-.header {
-  padding-bottom: 20px;
-  border-bottom: 1px solid #e5e5e5;
+.uni-ranking-tier-MASTERS {
+  color: cyan;
+  text-transform: lowercase;
+  text-transform: capitalize;
 }
 
-body {
-  padding-top: 20px;
-  padding-bottom: 20px;
+.uni-ranking-tier-DIAMOND {
+  color: cyan;
+  text-transform: lowercase;
+  text-transform: capitalize;
 }
-*/
 
-/*@media screen and (min-width: 768px) {
-   Remove the padding we set earlier 
-  .header,
-  .marketing,
-  .footer {
-    padding-right: 0;
-    padding-left: 0;
-  }
-
-  .header {
-    margin-bottom: 30px;
-  }
-
-  .jumbotron {
-    border-bottom: 0;
-  }
-}*/
-/*
-
-.header h3 {
-  margin-top: 0;
-  margin-bottom: 0;
-  line-height: 40px;
+.uni-ranking-tier-PLATINUM {
+  color: cyan;
+  text-transform: lowercase;
+  text-transform: capitalize;
 }
-*/
+
+.uni-ranking-tier-GOLD {
+  color: cyan;
+  text-transform: lowercase;
+  text-transform: capitalize;
+}
+
+.uni-ranking-tier-SILVER {
+  color: cyan;
+  text-transform: lowercase;
+  text-transform: capitalize;
+}
+
+.uni-ranking-tier-BRONZE {
+  color: cyan;
+  text-transform: lowercase;
+  text-transform: capitalize;
+}
+

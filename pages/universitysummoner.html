@@ -58,13 +58,16 @@
               </tr>
             </table> -->
             <form class="form-inline">
-              <input ng-model="query" type="text" placeholder="Filter by" autofocus>
+              <input ng-model="query" type="text" placeholder="Filter by Name" autofocus>
             </form>
-            <ul ng-repeat="rankingData in allRankingData | filter:query | orderBy:'-internalRanking'">
-    		      <li>{{index}}</li>
-      		    <li>{{rankingData[0].entries[0].playerOrTeamName}}</li>
-      		    <li>{{rankingData[0].tier}} {{rankingData[0].entries[0].division}} - {{rankingData[0].entries[0].leaguePoints}}LP</li>
-              <li>{{rankingData.internalRanking}}</li>
+            <ul ng-repeat="rankingData in allRankingData | filter:query | orderBy:'-internalRanking'" ng-init="index = $index + 1">
+    		      <li class="uni-ranking">{{index}}</li>
+      		    <li class="uni-player-name">{{rankingData[0].entries[0].playerOrTeamName}}</li>
+      		    <li>
+                <span class="uni-ranking-tier-{{rankingData[0].tier}}">{{rankingData[0].tier}}</span> 
+                <span class="uni-ranking-division">{{rankingData[0].entries[0].division}}</span> - 
+                <span class="uni-ranking-LP">{{rankingData[0].entries[0].leaguePoints}}LP</span>
+              </li>
     	     	</ul>
           </div>
         </div>
