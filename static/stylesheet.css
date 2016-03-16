@@ -51,45 +51,29 @@
   All Tier, Division and LP Ranking
 **/
 
-.uni-ranking-tier-CHALLENGER {
-  color: cyan;
-  text-transform: lowercase;
-  text-transform: capitalize;
+.uni-ranking-tier-Challenger {
 }
 
-.uni-ranking-tier-MASTERS {
-  color: cyan;
-  text-transform: lowercase;
-  text-transform: capitalize;
+.uni-ranking-tier-Masters {
 }
 
-.uni-ranking-tier-DIAMOND {
+.uni-ranking-tier-Diamond {
   color: cyan;
-  text-transform: lowercase;
-  text-transform: capitalize;
 }
 
-.uni-ranking-tier-PLATINUM {
-  color: cyan;
-  text-transform: lowercase;
-  text-transform: capitalize;
+.uni-ranking-tier-Platinum {
+  color: #e5e4e2;
 }
 
-.uni-ranking-tier-GOLD {
-  color: cyan;
-  text-transform: lowercase;
-  text-transform: capitalize;
+.uni-ranking-tier-Gold {
+  color: #FFD700;
 }
 
-.uni-ranking-tier-SILVER {
-  color: cyan;
-  text-transform: lowercase;
-  text-transform: capitalize;
+.uni-ranking-tier-Silver {
+  color: #c0c0c0;
 }
 
-.uni-ranking-tier-BRONZE {
-  color: cyan;
-  text-transform: lowercase;
-  text-transform: capitalize;
+.uni-ranking-tier-Bronze {
+  color: #cd7f32;
 }
 
