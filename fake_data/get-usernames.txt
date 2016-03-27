@@ -22,14 +22,7 @@ __RequestVerificationToken = W0lPt_s5HO9GUBTe4X8cw3EdFSkhjzgmrCS6NzV8lXAyfg6B6Jd
 UserName = your email
 Password = your password
 
-
-
-
-
-Getting: "Could not determine external identity." from Postman
-
-Meaning I need to pass in more request headers/
-
+On the GET of the login page, in response headers, you get the 2nd ARRAFinnity code and the RequestVerificationToken
 
 
 

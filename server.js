@@ -1,6 +1,7 @@
 var express = require("express");
 var app = express();
 var path    = require("path");
+var cheerio = require('cheerio')
 
 var request = require('superagent-cache')();
 
@@ -39,16 +40,64 @@ app.listen(8080, function() {
  //            console.log("HI");
  //            console.log(data);
  //        });
-	var url = "https://thenuel.com/university/3236";
+	var url = "https://login.thenuel.com/authenticate/login?ReturnUrl=%2Fauthorize%3Fresponse_type%3Dcode%26client_id%3Dc82cb4c9-7cfa-4483-938b-2d3c61efabea%26redirect_uri%3Dhttps%253A%252F%252Fthenuel.com%252Fsignin-nuel%26scope%3Didentity%2520offline%26state%3DiNj9r1juVrmUK5DyLfXnjq6bM6Fci5E1seI-faOadJQsfBKC9PQJJA-wve3TrusBfhrcjNk8C932FDA_vgQIyrlg36K6ucoC3HZkAO-Yn-mRXmaVqZcdKPRvgwYr55UkeETK4ZsjyuOXNixzk0Z3AslC2ZVN2dqiqoPfpoYtz_n-xgtJlvN5WwRt6cEAvzSwhHkFX4UPUF_1OalC8J4aYO-FHfUjTp8Bv4xBe7w0j0exmjcsMIjpmnp4qbN3qz7u";
         request
         .get(url)
-  		.set("Cookie", cookieString)
         .end(function(err, res) {
         	if (err) {
         		console.log(err);
         	} else {
-        		// Parse the HTML here and send it all to a database
-        		console.log(res.text);
+
+        		// This is for getting the response headers from the GET page
+                console.log("~~~GET~~~~~~~~~~~~~~~~~~~~~~~~")
+                $ = cheerio.load(res.headers);
+
+                var secondRequestVToken = res.headers['set-cookie'][0]
+                console.log("~~~Second RequestVerificationToken: " + secondRequestVToken);
+
+                var firstARRAffinity = "ARRAffinity=5b17567435646dac45043c0c794c3b0ff3a00b013f21e882c40ab5fbe708361e; _ga=GA1.2.592576149.1458220828; _gat=1; "
+
+                var secondARRAffinity = res.headers['set-cookie'][1]
+                console.log("~~~Second ARRAfinnity: " + secondARRAffinity);
+
+
+                // This is the getting of the post Request data from the login page
+                console.log("~~~POST~~~~~~~~~~~~~~~~~~~~~~~~");
+                $ = cheerio.load(res.text)
+
+                var postUrl = "https://login.thenuel.com" + $('body > div > div > div.content-pane.login > form').attr("action");
+                console.log("~~~URL POST: " + postUrl);
+
+                var firstRequestVToken = $('body > div > div > div.content-pane.login > form > input[type="hidden"]:nth-child(1)').attr("value");
+                console.log("~~~First POST RequestVerificationToken: " + firstRequestVToken);
+
+                var formData= {
+                    UserName:'on36@kent.ac.uk',
+                    Password:'Archos83',
+                    __RequestVerificationToken:firstRequestVToken
+                }
+                console.log(formData);
+
+                var finalCookieString = firstARRAffinity + " "
+                 + secondRequestVToken + " " + secondARRAffinity;
+
+                console.log(finalCookieString);
+
+
+                request
+                .post(postUrl)
+                .send(formData)
+                .set("Cookie", finalCookieString)
+                .end(function(err, res) {
+                    // Do respone here
+                    if (err) {
+                        console.log("Hello failure world!");
+                        console.log(err);
+                    } else {
+                        console.log("Hello success world!");
+                        console.log(res);
+                    }
+                })
         	}
         })
 });
